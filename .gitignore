@@ -4,3 +4,11 @@ data/
 venv/
 .venv/
 .mypy_cache/
+
+__*/
+DS*
+DS*/
+.DS_*
+
+__pycache__/
+*.pyc

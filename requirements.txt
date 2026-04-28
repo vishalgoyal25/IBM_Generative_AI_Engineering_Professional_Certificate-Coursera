@@ -6,3 +6,8 @@ requests==2.31.0
 torch==2.2.1
 Pillow
 
+flask
+flask_cors
+openai
+
+
