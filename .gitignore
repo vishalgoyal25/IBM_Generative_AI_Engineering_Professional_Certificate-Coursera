@@ -15,5 +15,3 @@ __pycache__/
 
 .env
 Git_cmd.txt
-__pycache__/
-*.pyc
