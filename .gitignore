@@ -12,3 +12,8 @@ DS*/
 
 __pycache__/
 *.pyc
+
+.env
+Git_cmd.txt
+__pycache__/
+*.pyc
