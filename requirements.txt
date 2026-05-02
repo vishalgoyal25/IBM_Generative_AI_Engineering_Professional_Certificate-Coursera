@@ -10,4 +10,5 @@ flask
 flask_cors
 openai
 
-
+ibm_watson_machine_learning==1.0.335
+huggingface-hub==0.28.1
