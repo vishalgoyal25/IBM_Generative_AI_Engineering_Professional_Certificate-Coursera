@@ -31,6 +31,7 @@ huggingface-hub==0.36.2
 # Data + utils
 pydantic==2.10.1
 pandas==1.5.0
+numpy==1.26.4
 
 # Document + vector DB
 pdf2image==1.17.0
@@ -40,3 +41,6 @@ chromadb==0.4.24
 # Parsing
 lxml==4.9.2
 beautifulsoup4==4.14.3
+
+email-validator==2.1.1
+
