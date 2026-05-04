@@ -1,0 +1,19 @@
+Tasks and objectives:
+
+Task 1: Fork and Clone the project repository
+Task 2: Create an emotion detection application using Watson NLP library
+Task 3: Format the output of the application
+Task 4: Package the application
+Task 5: Run Unit tests on your application
+Task 6: Deploy as web application using Flask
+Task 7: Incorporate Error handling
+Task 8: Run static code analysis
+
+
+
+https://github.com/vishalgoyal25/oaqjp-final-project-emb-ai/blob/main/README.md
+
+
+Shareable Link -> 
+https://www.coursera.org/learn/python-project-for-ai-application-development/peer/51Cr4/option-2-peer-graded-submission-and-evaluation/review/6Gfcw0emEfGF5gr_0r6hMw
+

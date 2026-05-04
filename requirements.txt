@@ -1,0 +1,46 @@
+gradio==5.23.2
+flask==3.1.0
+flask-cors==5.0.0
+
+# Core ML
+torch==2.0.1
+torchvision==0.15.2
+transformers==4.35.2
+tokenizers==0.15.2
+sentence-transformers==2.2.2
+
+# LLM + API
+openai==2.33.0
+tiktoken==0.8.0
+requests==2.32.2
+
+# LangChain (aligned versions)
+langchain==0.3.8
+langchain-core==0.3.63
+langchain-community==0.3.8
+langchain-text-splitters==0.3.8
+langchain-ibm==0.3.4
+
+# IBM stack
+ibm-watsonx-ai==1.1.20
+ibm_watson_machine_learning==1.0.335
+
+# HuggingFace ecosystem
+huggingface-hub==0.36.2
+
+# Data + utils
+pydantic==2.10.1
+pandas==1.5.0
+numpy==1.26.4
+
+# Document + vector DB
+pdf2image==1.17.0
+pypdf==5.2.0
+chromadb==0.4.24
+
+# Parsing
+lxml==4.9.2
+beautifulsoup4==4.14.3
+
+email-validator==2.1.1
+

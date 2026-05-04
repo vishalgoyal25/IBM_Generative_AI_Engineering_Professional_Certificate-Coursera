@@ -1,0 +1,11 @@
+git clone https://github.com/ibm-developer-skills-network/bkrva-chatapp-with-voice-and-openai-outline.git
+mv bkrva-chatapp-with-voice-and-openai-outline chatapp-with-voice-and-openai-outline
+cd chatapp-with-voice-and-openai-outline
+
+mkdir /home/project/chatapp-with-voice-and-openai-outline/certs/
+cp /usr/local/share/ca-certificates/rootCA.crt /home/project/chatapp-with-voice-and-openai-outline/certs/
+
+docker build . -t voice-chatapp-powered-by-openai
+docker run -p 8000:8000 voice-chatapp-powered-by-openai
+
+
