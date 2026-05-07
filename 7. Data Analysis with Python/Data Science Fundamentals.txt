@@ -1,0 +1,408 @@
+COMPLETE DATA SCIENCE FUNDAMENTALS (SEQUENTIAL NOTES)
+
+DATA UNDERSTANDING
+Data Types → use .info() to check numeric vs object
+Data Summary → use .describe() to see stats (mean, min, max)
+Missing Values → use .isna(), handle with .dropna() or .fillna()
+Wrong Formats → convert using pd.to_numeric()
+Rename Columns → use .rename() for clarity
+DATA CLEANING
+Type Conversion → .astype() or pd.to_numeric()
+Handle Missing Data → fill or remove missing values
+Category Standardization → use .str.lower() to fix inconsistencies
+Avoid mixed values like "?", None, text in numeric columns
+FEATURE SCALING
+Normalization → scale between 0–1 (MinMaxScaler)
+Standardization → mean=0, std=1 (StandardScaler)
+Purpose → ensure all features contribute equally
+EXPLORATORY DATA ANALYSIS (EDA)
+Preview Data → .head()
+Group Data → .groupby() for averages
+Correlation → .corr() to check relationships
+Visualization → histograms, scatter plots
+
+EDA = understand data before modeling
+
+FEATURE ENGINEERING
+Create useful inputs
+Polynomial Features → PolynomialFeatures() for non-linear patterns
+Feature selection → choose relevant variables
+MODEL BUILDING
+Create Model → LinearRegression()
+Train Model → .fit(X, Y)
+Predict → .predict(X)
+MODEL EVALUATION
+R² Score → goodness of fit
+.score(X, Y) OR r2_score(Y, y_pred)
+MSE → mean squared error (accuracy measure)
+Residuals → actual − predicted
+MODEL BEHAVIOR
+Overfitting → too complex → high variance
+Underfitting → too simple → high bias
+Goal → balance bias and variance
+REGULARIZATION
+Ridge/Lasso → reduce complexity
+Alpha (α) → controls strength
+low α → complex model
+high α → simple model (may underfit)
+MODEL VALIDATION
+Train/Test Split → 80–20 split
+Problem → results vary with each split
+Cross Validation → more reliable
+use cross_val_score()
+cross_val_predict() → gives predictions
+PIPELINES
+Combine steps (scaling + model)
+Use Pipeline()
+Example: scaling + regression together
+MODEL DIAGNOSTICS
+Residual Plot:
+random → good model
+curved → model is wrong (non-linear pattern missed)
+REAL-WORLD CHECKS
+Reasonable Range → sanity check predictions
+Extrapolation → predictions outside training range are unreliable
+Noise → random, cannot be predicted
+HYPERPARAMETER TUNING
+GridSearchCV()
+Requires param_grid (dictionary)
+example: {"alpha": [0.1, 1, 10]}
+
+IMPORTANT QUICK FACTS
+
+.score(X, Y) → internally does predict(X) then compares with Y
+r2_score(Y, y_pred) → requires predictions
+inplace=True → modifies same dataframe
+inplace=False → returns new dataframe
+Avoid chained assignment
+.astype(int) fails if NaN present
+Histogram fails if all values are NaN
+CSV = plain text file with rows and columns
+Category mismatch → "Windows" ≠ "windows"
+
+FINAL FLOW TO REMEMBER
+
+Raw Data
+→ Clean (missing, types)
+→ Explore (EDA)
+→ Transform (features)
+→ Train Model
+→ Evaluate (R², MSE)
+→ Diagnose (residuals)
+→ Improve (regularization, CV)
+→ Validate (real-world checks)
+================================================================================================
+
+
+
+==================================================
+DATA SCIENCE & REGRESSION — MATHEMATICAL CORE
+==================================================
+
+1. LINEAR REGRESSION MODEL
+
+Model:
+y = β0 + β1x1 + β2x2 + ... + βnxn + ε
+
+Where:
+- y → target variable
+- x → features
+- β → coefficients (learned weights)
+- ε → error (noise)
+
+Goal:
+Find β that minimizes prediction error.
+
+--------------------------------------------------
+
+2. COST FUNCTION (MSE)
+
+MSE = (1/n) Σ (yi - ŷi)^2
+
+Where:
+- yi → actual value
+- ŷi → predicted value
+
+Meaning:
+Measures average squared error.
+
+Use:
+- Training objective for regression
+- Lower MSE = better model
+
+--------------------------------------------------
+
+3. R² SCORE (COEFFICIENT OF DETERMINATION)
+
+R² = 1 - (SS_res / SS_tot)
+
+Where:
+SS_res = Σ(yi - ŷi)^2
+SS_tot = Σ(yi - ȳ)^2
+
+Meaning:
+How much variance is explained by model.
+
+Range:
+- 1 → perfect fit
+- 0 → no better than mean
+- <0 → worse than baseline
+
+Use:
+Evaluate model performance
+
+--------------------------------------------------
+
+4. RESIDUALS
+
+Residual = yi - ŷi
+
+Meaning:
+Difference between actual and predicted.
+
+Use:
+- Diagnose model
+- Plot residuals:
+  random → good model
+  pattern → model is wrong
+
+--------------------------------------------------
+
+5. NORMALIZATION (MIN-MAX SCALING)
+
+x' = (x - min(x)) / (max(x) - min(x))
+
+Range:
+[0, 1]
+
+Use:
+- When features have different scales
+- Neural networks, distance-based models
+
+--------------------------------------------------
+
+6. STANDARDIZATION (Z-SCORE)
+
+z = (x - μ) / σ
+
+Where:
+- μ → mean
+- σ → standard deviation
+
+Use:
+- Makes data mean=0, std=1
+- Required for many ML algorithms
+
+--------------------------------------------------
+
+7. POLYNOMIAL REGRESSION
+
+Model:
+y = β0 + β1x + β2x² + β3x³ + ...
+
+Meaning:
+Transforms linear model into non-linear relationship.
+
+Use:
+- When data is curved (non-linear)
+
+Risk:
+- High degree → overfitting
+
+--------------------------------------------------
+
+8. OVERFITTING vs UNDERFITTING
+
+Overfitting:
+Model fits noise
+High variance
+Low training error, high test error
+
+Underfitting:
+Model too simple
+High bias
+High training error
+
+Goal:
+Balance both
+
+--------------------------------------------------
+
+9. RIDGE REGRESSION (L2 REGULARIZATION)
+
+Cost Function:
+MSE + α Σ(βj²)
+
+Meaning:
+Penalizes large coefficients
+
+Effect:
+- Shrinks weights
+- Reduces overfitting
+
+α (alpha):
+- Low α → complex model
+- High α → simple model
+
+--------------------------------------------------
+
+10. LASSO REGRESSION (L1 REGULARIZATION)
+
+Cost Function:
+MSE + α Σ|βj|
+
+Meaning:
+Can shrink some coefficients to zero
+
+Use:
+- Feature selection
+
+--------------------------------------------------
+
+11. BIAS-VARIANCE TRADEOFF
+
+Error = Bias² + Variance + Noise
+
+Bias:
+Error due to simplicity
+
+Variance:
+Error due to sensitivity to data
+
+Noise:
+Random error (cannot be reduced)
+
+Goal:
+Minimize total error
+
+--------------------------------------------------
+
+12. CROSS VALIDATION
+
+Split data into k folds
+
+Train on (k-1), test on 1
+
+Repeat k times
+
+Final score = average
+
+Use:
+- Reliable performance estimate
+
+--------------------------------------------------
+
+13. CORRELATION
+
+Pearson Correlation:
+
+r = Σ[(xi - x̄)(yi - ȳ)] / (σx * σy)
+
+Range:
+-1 to 1
+
+Meaning:
+- +1 → strong positive
+- -1 → strong negative
+- 0 → no relation
+
+Use:
+- Feature selection
+
+--------------------------------------------------
+
+14. GRID SEARCH
+
+Goal:
+Find best parameters
+
+Input:
+param_grid = {
+  "alpha": [0.1, 1, 10]
+}
+
+Try all combinations → pick best
+
+Use:
+Model tuning
+
+--------------------------------------------------
+
+15. PIPELINE
+
+Pipeline = sequence of steps
+
+Example:
+Scaling → Transformation → Model
+
+Mathematically:
+f(x) = Model(Transform(Scale(x)))
+
+Use:
+- Clean workflow
+- Avoid data leakage
+
+--------------------------------------------------
+
+16. EXTRAPOLATION
+
+Prediction outside training range
+
+Problem:
+Model assumptions break
+
+Example:
+Train: MPG 10–40
+Predict: MPG 100 → unreliable
+
+--------------------------------------------------
+
+17. NOISE
+
+y = f(x) + ε
+
+ε = random noise
+
+Properties:
+- unpredictable
+- cannot be modeled
+
+--------------------------------------------------
+
+18. RESIDUAL ANALYSIS
+
+If residuals:
+- Random → good model
+- Curve → missing non-linearity
+- Funnel shape → heteroscedasticity
+
+--------------------------------------------------
+
+19. FEATURE SCALING IMPORTANCE
+
+Without scaling:
+Large values dominate
+
+With scaling:
+All features contribute equally
+
+--------------------------------------------------
+
+20. FINAL MODEL FLOW
+
+Data → Clean → Transform → Model → Evaluate → Improve
+
+--------------------------------------------------
+
+CORE INSIGHT SUMMARY
+
+- Model learns pattern (signal), not noise
+- Regularization controls complexity
+- Validation checks generalization
+- Residuals reveal model mistakes
+- Scaling ensures fairness among features
+
+==================================================
+
+
+

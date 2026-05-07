@@ -1,0 +1,55 @@
+Lesson Summary
+Congratulations! You have completed this lesson. At this point in the course, you know: 
+
+How to split your data using the train_test_split() method into training and test sets. You use the training set to train a model, discover possible predictive relationships, and then use the test set to test your model to evaluate its performance.
+
+How to use the generalization error to measure how well your data does at predicting previously unseen data.
+
+How to use cross-validation by splitting the data into folds where you use some of the folds as a training set, which we use to train the model, and the remaining parts are used as a test set, which we use to test the model. You iterate through the folds until you use each partition for training and testing. At the end, you average results as the estimate of out-of-sample error.
+
+How to pick the best polynomial order and problems that arise when selecting the wrong order polynomial by analyzing models that underfit and overfit your data.
+
+Select the best order of a polynomial to fit your data by minimizing the test error using a graph comparing the mean square error to the order of the fitted polynomials.
+
+You should use ridge regression when there is a strong relationship among the independent variables.  
+
+That ridge regression prevents overfitting.
+
+Ridge regression controls the magnitude of polynomial coefficients by introducing a hyperparameter, alpha. 
+
+To determine alpha, you divide your data into training  and validation data. Starting with a small value for alpha, you train the model, make a prediction using the validation data, then calculate the R-squared and store the values. You repeat the value for a larger value of alpha. You repeat the process for different alpha values, training the model, and making a prediction. You select the value of alpha that maximizes R-squared.
+
+That grid search allows you to scan through multiple hyperparameters using the Scikit-learn library, which iterates over these parameters using cross-validation. Based on the results of the grid search method, you select optimum hyperparameter values.
+
+The GridSearchCV() method takes in a dictionary as its argument where the key is the name of the hyperparameter, and the values are the hyperparameter values you wish to iterate over.
+
+You can use grid search to find the best alpha value for ridge regression.
+
+To measure the out of sample error, you can use the R-squared value from a train test split.
+
+A negative R-squared value typically suggests that the model is overfit, and there may be a better model for your data.
+
+That the mean square error may be a more intuitive measure of model accuracy, particularly when evaluating the average error across predictions.
+
+That a smaller MSE value generally indicates a better model fit, while a larger MSE suggests potential overfitting or an inappropriate model.
+
+You can use the normalize() method to perform min-max normalization (scaling data to a 0-1 range), which can be particularly useful when working with polynomial features.
+
+That pipeline is used to combine the steps of a modeling process.
+
+A pipeline automates the work of preprocessing and training, making it easier to experiment with different hyperparameter settings.
+
+The following snippet of code shows an example of a pipeline.
+
+pipeline = Pipeline([('scale',StandardScaler()),('poly',PolynomialFeatures(include_bias=False)),('model',LinearRegression())])
+
+To determine the best alpha, perform a grid search over different alpha values and select the alpha value that yields the highest R-squared on the validation set.
+
+When using an evaluation metric, remember that the context matters. For example, a lower value of MSE is better, whereas a higher value of R-squared is better.
+
+You have now gained a solid foundation in model evaluation and refinement. These skills are critical for developing effective predictive models in various real-world applications.
+
+Next Steps
+Continue practicing these techniques with different datasets to solidify your understanding. As you progress, you can explore more advanced topics such as feature selection, ensemble methods, and automated machine learning (AutoML) to further enhance your modeling capabilities.
+
+Good luck on your AI journey!
