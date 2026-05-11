@@ -1,0 +1,74 @@
+### Logistic Regression with One-vs-All
+In the One-vs-All approach:
+
+* The algorithm trains a single binary classifier for each class.
+* Each classifier learns to distinguish a single class from all the others combined.
+* If there are k classes, k classifiers are trained.
+* During prediction, the algorithm evaluates all classifiers on each input, and selects the class with the highest confidence score as the predicted class.
+
+#### Advantages:
+* Simpler and more efficient in terms of the number of classifiers (k)
+* Easier to implement for algorithms that naturally provide confidence scores (e.g., logistic regression, SVM).
+
+#### Disadvantages:
+* Classifiers may struggle with class imbalance since each binary classifier must distinguish between one class and the rest.
+* Requires the classifier to perform well even with highly imbalanced datasets, as the "all" group typically contains more samples than the "one" class.
+
+=======================================================================
+
+### Logistic Regression with OvO
+
+In the One-vs-One approach:
+* The algorithm trains a binary classifier for every pair of classes in the dataset.
+* If there are k classes, this results in $k(k-1)/2$ classifiers.
+* Each classifier is trained to distinguish between two specific classes, ignoring the rest.
+* During prediction, all classifiers are used, and a "voting" mechanism decides the final class by selecting the class that wins the majority of pairwise comparisons.
+
+#### Advantages:
+* Suitable for algorithms that are computationally expensive to train on many samples because each binary classifier deals with a smaller dataset (only samples from two classes).
+* Can be more accurate in some cases since classifiers focus on distinguishing between two specific classes at a time.
+
+#### Disadvantages:
+* Computationally expensive for datasets with a large number of classes due to the large number of classifiers required.
+* May lead to ambiguous predictions if voting results in a tie.
+
+========================================================================
+
+
+### Decision Tree with One-vs-All
+
+In the One-vs-All (OvA) approach:
+* The algorithm trains one decision tree classifier for each class.
+* Each tree is trained to distinguish samples of one specific class from all other classes.
+* If there are k classes, k decision trees are trained.
+* During prediction, the algorithm evaluates all k trees, and the class whose tree yields the highest probability or confidence score is selected as the final prediction.
+
+#### Advantages:
+* Easier to interpret than OvO because each tree focuses on a single class decision boundary.
+* Can handle class imbalance more effectively than standard single-tree models by explicitly training each tree against the rest.
+
+#### Disadvantages:
+* Training k trees can be computationally expensive for datasets with many classes.
+* Performance heavily relies on the quality of each individual tree; a poorly performing tree can significantly impact the overall accuracy.
+
+========================================================================
+
+
+### Decision Tree with One-vs-One
+
+In the One-vs-One (OvO) approach:
+* The algorithm trains a binary decision tree classifier for every pair of classes.
+* If there are k classes, this results in $k(k-1)/2$ binary trees.
+* Each tree is trained using samples from only two classes, learning to distinguish between them.
+* During prediction, all binary trees vote, and the class with the most votes is selected.
+
+#### Advantages:
+* Each binary classifier deals with a smaller subset of data (only two classes), which can lead to simpler and more accurate boundaries.
+* Suitable for algorithms that perform better on smaller datasets.
+
+#### Disadvantages:
+* Training a large number of trees can be computationally expensive when the number of classes is high.
+* The voting mechanism can lead to ambiguous results in case of ties, potentially requiring a tie-breaking rule.
+
+========================================================================
+
