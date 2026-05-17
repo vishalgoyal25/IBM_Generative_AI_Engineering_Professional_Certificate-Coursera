@@ -30,8 +30,6 @@ huggingface-hub==0.36.2
 
 # Data + utils
 pydantic==2.10.1
-pandas==1.5.0
-numpy==1.26.4
 
 # Document + vector DB
 pdf2image==1.17.0
@@ -43,4 +41,8 @@ lxml==4.9.2
 beautifulsoup4==4.14.3
 
 email-validator==2.1.1
+
+tensorflow_cpu==2.21.0
+numpy==2.0.2
+pandas==2.2.2
 

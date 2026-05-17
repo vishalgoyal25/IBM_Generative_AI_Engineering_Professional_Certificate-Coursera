@@ -15,3 +15,16 @@ __pycache__/
 
 .env
 Git_cmd.txt
+
+AI_Engineering_(Complete_Book).pdf
+
+# Ignore Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Ignore other hidden files and directories
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+

@@ -1,0 +1,26 @@
+Congratulations! You have completed this lesson. At this point in the course, you know:  
+
+TensorFlow, PyTorch, and Keras are the most popular deep learning libraries. 
+
+TensorFlow is used in the production of deep learning models and has a very large community of users. 
+
+PyTorch is based on the Torch framework in Lua and supports machine learning algorithms running on GPUs. It is preferred over TensorFlow in academic research settings. 
+
+PyTorch and TensorFlow are not easy to use and have a steep learning curve.  
+
+Keras is a high-level API for building deep learning models. It has gained favor due to its ease of use and syntactic simplicity, facilitating fast development.  
+
+Keras can build a very complex deep learning network with only a few lines of code. It normally runs on top of a low-level library, such as TensorFlow.  
+
+Before using the Keras library, you need to prepare your data and organize it in the correct format. 
+
+You can build and train a neural network with only a few lines of code in Keras.  
+
+A data set can be divided into predictors and a target.  
+
+When you’re using Keras to solve classification problems, you need to transform the target column into an array with binary values. 
+
+You can use the 'to_categorical' function from the Keras utilities package to transform a data set column into an array of binary values.  
+
+You can use Keras code to build a classification model. 
+
