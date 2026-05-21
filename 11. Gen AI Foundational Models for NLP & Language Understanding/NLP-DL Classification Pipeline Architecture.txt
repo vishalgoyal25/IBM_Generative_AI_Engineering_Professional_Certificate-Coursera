@@ -1,0 +1,74 @@
+Raw Human Language
+↓
+Dataset Collection
+↓
+Dataset Splitting (Train / Validation / Test)
+↓
+Text Cleaning / Preprocessing
+↓
+Tokenization
+↓
+Vocabulary Building
+↓
+Token-to-Index Mapping
+↓
+Numericalization
+↓
+Tensor Conversion
+↓
+Batch Formation (DataLoader)
+↓
+Padding / Offsets Handling
+↓
+Embedding Layer Lookup
+↓
+Embedding Vector Generation
+↓
+EmbeddingBag Aggregation
+↓
+Dense Semantic Representation
+↓
+Neural Network Forward Pass
+↓
+Linear Transformation (Weights + Bias)
+↓
+Logits Generation
+↓
+Softmax / Probability Distribution
+↓
+Class Probability Prediction
+↓
+Argmax Selection
+↓
+Predicted Category Output
+
+--------------------------------------------------
+
+TRAINING PHASE ADDITIONAL FLOW
+--------------------------------------------------
+
+Predicted Output
+↓
+Actual Label Comparison
+↓
+Loss Function Computation (CrossEntropyLoss)
+↓
+Error Measurement
+↓
+Backpropagation (loss.backward())
+↓
+Gradient Computation
+↓
+Optimizer Step (optimizer.step())
+↓
+Weight Update
+↓
+Learning / Parameter Adjustment
+↓
+Epoch Completion
+↓
+Validation Evaluation
+↓
+Model Saving (torch.save)
+↓
+Trained NLP Model
