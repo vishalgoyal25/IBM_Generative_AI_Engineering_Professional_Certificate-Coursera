@@ -1,0 +1,98 @@
+Congratulations! You have completed this lesson. At this point in the course, you know that: 
+
+A bi-gram model is a conditional probability model with context size one, that is, you consider only the immediate previous word to predict the next one.
+
+A trigram model is also a conditional probability function and can improve on the bigram model’s limitations by increasing the context size to two.
+
+The concept of a trigram can be generalized to an N-gram model, which allows for an arbitrary context size.
+
+ In neural network-based n-gram models, the input vector's dimensionality is often described as the product of the vocabulary size and the context size—if one-hot encodings are used. 
+ However, in practice, this high-dimensional representation is avoided by using embedding vectors, and the context vector is typically formed by concatenating the embeddings of the preceding words.  
+
+An N-gram model allows for an arbitrary context size.
+
+In Pytorch, the n-gram language model is essentially a classification model, using the context vector and an extra hidden layer to enhance performance.
+
+The n-gram model predicts words surrounding a target by incrementally shifting as a sliding window.
+
+In training the model, prioritize the loss over accuracy as your key performance indicator or KPI.
+
+
+---------------------------------------------------------------------------------
+
+Here's a summary of the N-gram concepts covered in the lesson, along with key definitions and practical implementation insights from the labs:
+
+## N-Gram Model Basics
+
+- **Definition**: An N-gram model is a statistical language model that predicts the probability of a word based on the preceding N-1 words. It's a conditional probability model.
+- **Context Window**: The "N" in N-gram refers to the size of the context window. A trigram model (N=3) considers the previous two words (N-1 = 2).
+
+
+## Training & Evaluation
+
+- **Loss Function**: **Cross-Entropy Loss** is used to measure the difference between predicted probabilities and the actual next word.
+- **Optimization**: **AdamW** optimizer is typically used.
+- **Key Performance Indicator (KPI)**: During training, **prioritize loss over accuracy**. Lower loss indicates better model performance in capturing the language distribution.
+- **Metrics**: **Accuracy**, **Perplexity**, and **F1-Score** are commonly used evaluation metrics.
+- **Validation Set**: A separate validation set is crucial to evaluate the model's generalization ability and detect overfitting.
+
+## Code Snippets & Best Practices
+
+```python
+# Creating training and validation loaders
+train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE)
+val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE)
+
+# Training loop structure
+model.train()
+for batch in train_loader:
+    loss.backward()
+    optimizer.step()
+    scheduler.step()
+    scheduler.zero_grad()
+
+# Validation loop
+model.eval()
+with torch.no_grad():
+    for batch in val_loader:
+        outputs = model(context)
+        # Calculate metrics
+```
+
+## Key Takeaways
+
+1. N-gram models capture context but suffer from data sparsity as N increases.
+2. PyTorch implementation uses **embedding concatenation** for the input vector.
+3. The model is treated as a **classification problem** with Cross-Entropy Loss.
+4. **Loss minimization** is the primary KPI during training.
+5. A **hidden layer** in the neural network architecture significantly improves performance.
+6. The model predicts **surrounding words** by sliding a window over the text.
+
+
+Here's a concise summary of the N-gram model concepts from the lesson:
+
+**N-Gram Model Overview**
+-   **Definition**: An N-gram model is a statistical language model that predicts the probability of a word based on the preceding N-1 words.
+-   **Context**: It captures context by considering a fixed-size window of previous words (the "N" in N-gram).
+-   **Examples**:
+    -   Bigram (N=2): Predicts based on the single previous word.
+    -   Trigram (N=3): Predicts based on the previous two words.
+
+**Practical Implementation (PyTorch)**
+-   **Model Type**: Implemented as a **classification model**, not sequence-to-sequence.
+-   **Input Vector**: Formed by **concatenating** the embeddings of the preceding words.
+-   **Architecture**:
+    -   Typically includes a **hidden layer** between the input (context vector) and output (word probabilities).
+    -   A linear layer maps the context vector to the vocabulary size.
+-   **Training**:
+    -   Uses **Cross-Entropy Loss** to minimize prediction errors.
+    -   **Loss minimization** is the primary KPI (more important than accuracy).
+    -   **AdamW** optimizer is commonly used.
+
+**Key Takeaways**
+1.  N-gram models are effective for capturing local context.
+2.  They face **data sparsity** issues as N increases (need more data for larger N).
+3.  The PyTorch implementation uses **embedding concatenation** for the input.
+4.  A **hidden layer** significantly improves model performance.
+5.  **Loss minimization** is the key metric during training.
+

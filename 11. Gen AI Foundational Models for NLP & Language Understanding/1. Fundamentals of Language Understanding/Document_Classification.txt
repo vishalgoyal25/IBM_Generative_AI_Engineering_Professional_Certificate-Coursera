@@ -1,0 +1,868 @@
+===========================
+DOCUMENT CLASSIFICATION USING NLP + NEURAL NETWORKS
+Complete End-to-End Pipeline Explanation
+===========================
+
+
+1. RAW TEXT DATASET LOADING
+---------------------------
+
+The lab started with the AG_NEWS dataset.
+
+Each sample contained:
+- a news article
+- a category label
+
+Example:
+
+Text:
+"Apple launches new AI-powered device..."
+
+Label:
+Sci/Tech
+
+Purpose:
+- Provide real-world textual data for neural classification.
+
+
+--------------------------------------------------
+
+
+2. TEXT + LABEL EXTRACTION
+--------------------------
+
+Each dataset sample was structured as:
+
+(label, text)
+
+Example:
+
+(4, "Apple launches new AI-powered device")
+
+Purpose:
+- Separate:
+  - input text
+  - expected category output
+
+
+--------------------------------------------------
+
+
+3. TOKENIZATION
+---------------
+
+The raw text was broken into tokens (words).
+
+Example:
+
+"Apple launches new AI device"
+
+↓
+
+["apple", "launches", "new", "ai", "device"]
+
+Purpose:
+- Convert human language into manageable units for NLP processing.
+
+
+--------------------------------------------------
+
+
+4. LOWERCASING + NORMALIZATION
+------------------------------
+
+All text was converted to lowercase.
+
+Example:
+
+"Apple"
+
+↓
+
+"apple"
+
+Purpose:
+- Reduce vocabulary duplication.
+- Treat:
+  "Apple" and "apple"
+  as same token.
+
+
+--------------------------------------------------
+
+
+5. VOCABULARY CONSTRUCTION
+--------------------------
+
+A vocabulary dictionary was created from all unique dataset words.
+
+Example:
+
+{
+ "apple": 0,
+ "football": 1,
+ "market": 2,
+ ...
+}
+
+Purpose:
+- Create numerical identities for all words.
+- Neural networks cannot process raw text directly.
+
+
+--------------------------------------------------
+
+
+6. WORD → INDEX MAPPING
+-----------------------
+
+Every tokenized word was converted into numerical IDs.
+
+Example:
+
+["apple", "launches", "ai"]
+
+↓
+
+[0, 52, 77]
+
+Purpose:
+- Transform language into machine-readable numerical representations.
+
+
+--------------------------------------------------
+
+
+7. UNKNOWN TOKEN HANDLING
+--------------------------
+
+Special token:
+
+<unk>
+
+was added.
+
+Purpose:
+- Handle unseen/new words safely.
+- Prevent crashes during inference.
+
+
+--------------------------------------------------
+
+
+8. TRAIN / VALIDATION / TEST SPLITTING
+--------------------------------------
+
+Dataset was divided into:
+
+- training set
+- validation set
+- test set
+
+Purpose:
+- Train model
+- validate performance
+- test generalization
+
+
+--------------------------------------------------
+
+
+9. TEXT PIPELINE CREATION
+-------------------------
+
+The text pipeline automated:
+
+Raw Text
+↓
+Tokenization
+↓
+Vocabulary Mapping
+
+Example:
+
+"AI changes business"
+
+↓
+
+[55, 91, 12]
+
+Purpose:
+- Build reusable NLP preprocessing pipeline.
+
+
+--------------------------------------------------
+
+
+10. LABEL PIPELINE CREATION
+---------------------------
+
+Labels were converted into neural-friendly format.
+
+Example:
+
+1 → 0
+2 → 1
+3 → 2
+4 → 3
+
+Purpose:
+- Neural networks prefer zero-indexed class labels.
+
+
+--------------------------------------------------
+
+
+11. TENSOR CONVERSION
+---------------------
+
+Numerical token IDs were converted into PyTorch tensors.
+
+Example:
+
+[52, 91, 12]
+
+↓
+
+tensor([52, 91, 12])
+
+Purpose:
+- Neural networks operate on tensors.
+- Enable GPU computation and gradients.
+
+
+--------------------------------------------------
+
+
+12. VARIABLE-LENGTH TEXT PROBLEM
+--------------------------------
+
+Articles had different lengths.
+
+Example:
+
+Article 1:
+20 words
+
+Article 2:
+300 words
+
+Neural batching requires structured tensor formatting.
+
+This created a major NLP engineering challenge.
+
+
+--------------------------------------------------
+
+
+13. COLLATE_BATCH() FUNCTION
+----------------------------
+
+This custom function solved the batching problem.
+
+It:
+- processed labels
+- processed text
+- created offsets
+- concatenated sequences
+
+Purpose:
+- Convert variable-length documents into batch-processable tensors.
+
+
+--------------------------------------------------
+
+
+14. FLATTENING TEXT SEQUENCES
+-----------------------------
+
+Instead of storing each document separately:
+
+All tokens were concatenated into one long tensor.
+
+Example:
+
+Doc1:
+[1, 5, 9]
+
+Doc2:
+[3, 7]
+
+↓
+
+[1, 5, 9, 3, 7]
+
+Purpose:
+- Efficient embedding computation.
+
+
+--------------------------------------------------
+
+
+15. OFFSET CREATION (VERY IMPORTANT)
+------------------------------------
+
+Offsets stored:
+where each document starts.
+
+Example:
+
+Offsets:
+[0, 3]
+
+Meaning:
+- Document 1 starts at index 0
+- Document 2 starts at index 3
+
+Purpose:
+- Help EmbeddingBag separate documents correctly.
+
+
+--------------------------------------------------
+
+
+16. DATALOADER CONSTRUCTION
+---------------------------
+
+DataLoader automated:
+- batching
+- shuffling
+- mini-batch feeding
+
+Purpose:
+- Efficient neural training pipeline.
+
+
+--------------------------------------------------
+
+
+17. DEVICE CONFIGURATION
+------------------------
+
+The system checked:
+- GPU availability
+- CPU fallback
+
+Purpose:
+- Accelerate tensor computations.
+
+
+--------------------------------------------------
+
+
+18. NEURAL NETWORK CONSTRUCTION
+-------------------------------
+
+The model architecture:
+
+Input Tokens
+↓
+EmbeddingBag Layer
+↓
+Sentence Representation
+↓
+Linear Output Layer
+↓
+Category Prediction
+
+Purpose:
+- Learn semantic document classification.
+
+
+--------------------------------------------------
+
+
+19. EMBEDDING LAYER INITIALIZATION
+----------------------------------
+
+Embedding layer:
+
+nn.EmbeddingBag(...)
+
+Purpose:
+- Convert token IDs into semantic vectors.
+
+Example:
+
+Word:
+"football"
+
+↓
+
+[0.11, -0.45, 0.72, ...]
+
+This is where:
+semantic learning begins.
+
+
+--------------------------------------------------
+
+
+20. WHY EMBEDDINGBAG WAS IMPORTANT
+----------------------------------
+
+Unlike standard embedding:
+
+EmbeddingBag:
+- automatically aggregates embeddings
+- computes mean/sum efficiently
+
+Purpose:
+- Create ONE vector representing entire document meaning.
+
+Example:
+
+Many word vectors
+↓
+
+Single sentence/document vector
+
+
+--------------------------------------------------
+
+
+21. SENTENCE REPRESENTATION LEARNING
+------------------------------------
+
+The network learned:
+
+combined semantic meaning of documents.
+
+Example:
+
+Words:
+["football", "match", "goal"]
+
+↓
+
+Sports-related semantic vector
+
+Purpose:
+- Learn high-level contextual meaning.
+
+
+--------------------------------------------------
+
+
+22. LINEAR CLASSIFIER CONSTRUCTION
+----------------------------------
+
+The final linear layer mapped:
+
+semantic representation
+↓
+
+category probabilities
+
+Example:
+
+Sports → 0.91
+Business → 0.02
+SciTech → 0.04
+
+Purpose:
+- Perform classification decision making.
+
+
+--------------------------------------------------
+
+
+23. FORWARD PROPAGATION
+-----------------------
+
+Complete forward pipeline:
+
+Document Tokens
+↓
+Embeddings
+↓
+Embedding Aggregation
+↓
+Sentence Representation
+↓
+Linear Classification
+↓
+Category Prediction
+
+Purpose:
+- Convert raw text into predicted document category.
+
+
+--------------------------------------------------
+
+
+24. OUTPUT LOGITS
+-----------------
+
+The network generated raw category scores.
+
+Example:
+
+Sports → 5.2
+Business → 1.1
+World → 0.4
+
+Purpose:
+- Estimate likelihood of each category.
+
+
+--------------------------------------------------
+
+
+25. ARGMAX PREDICTION
+---------------------
+
+Highest probability/logit selected final category.
+
+Example:
+
+max(logits)
+
+↓
+
+Sports
+
+Purpose:
+- Final classification decision.
+
+
+--------------------------------------------------
+
+
+26. LOSS FUNCTION
+-----------------
+
+CrossEntropyLoss measured prediction error.
+
+Example:
+
+Predicted:
+Business
+
+Actual:
+Sports
+
+↓
+
+High loss
+
+Purpose:
+- Quantify classification error.
+
+
+--------------------------------------------------
+
+
+27. BACKPROPAGATION
+-------------------
+
+loss.backward()
+
+Purpose:
+- Compute gradients.
+- Learn how weights should change to reduce future errors.
+
+
+--------------------------------------------------
+
+
+28. OPTIMIZER STEP
+------------------
+
+optimizer.step()
+
+Purpose:
+- Update:
+  - embeddings
+  - classifier weights
+  - semantic representations
+
+The model gradually learns classification patterns.
+
+
+--------------------------------------------------
+
+
+29. GRADIENT CLIPPING
+---------------------
+
+clip_grad_norm_()
+
+Purpose:
+- Prevent exploding gradients.
+- Stabilize training.
+
+
+--------------------------------------------------
+
+
+30. LEARNING RATE SCHEDULER
+---------------------------
+
+The scheduler gradually reduced learning rate.
+
+Example:
+
+0.1
+↓
+
+0.01
+↓
+
+0.001
+
+Purpose:
+- Stabilize convergence.
+- Improve optimization quality.
+
+
+--------------------------------------------------
+
+
+31. EPOCH-BASED TRAINING
+------------------------
+
+The model repeatedly processed the entire dataset.
+
+Purpose:
+- Improve semantic understanding over time.
+- Reduce classification error.
+
+
+--------------------------------------------------
+
+
+32. VALIDATION EVALUATION
+-------------------------
+
+Validation dataset evaluated:
+- generalization quality
+- overfitting
+
+Purpose:
+- Monitor model performance during training.
+
+
+--------------------------------------------------
+
+
+33. MODEL SAVING
+----------------
+
+Best-performing model weights were saved.
+
+Purpose:
+- Preserve optimal learned model.
+
+
+--------------------------------------------------
+
+
+34. LOSS + ACCURACY VISUALIZATION
+---------------------------------
+
+Graphs visualized:
+- loss reduction
+- accuracy improvement
+
+Purpose:
+- Observe neural learning progress.
+
+
+--------------------------------------------------
+
+
+35. TEST EVALUATION
+-------------------
+
+Final test dataset measured:
+- real-world classification performance
+
+Purpose:
+- Evaluate unseen-data generalization.
+
+
+--------------------------------------------------
+
+
+36. EMBEDDING EXTRACTION
+------------------------
+
+Learned embeddings were extracted from the model.
+
+Purpose:
+- Analyze learned semantic structures.
+
+
+--------------------------------------------------
+
+
+37. t-SNE DIMENSIONALITY REDUCTION
+----------------------------------
+
+High-dimensional embeddings reduced to 3D.
+
+Example:
+
+100D
+↓
+
+3D visualization
+
+Purpose:
+- Visualize semantic relationships.
+
+
+--------------------------------------------------
+
+
+38. SEMANTIC VISUALIZATION
+--------------------------
+
+Similar documents clustered together.
+
+Example:
+
+Sports-related articles
+↓
+
+near each other in embedding space
+
+Purpose:
+- Prove semantic learning occurred.
+
+
+--------------------------------------------------
+
+
+39. REAL-WORLD INFERENCE
+------------------------
+
+Custom unseen article passed into model.
+
+Example:
+
+"Canada wins Women's World Cup match..."
+
+↓
+
+Predicted:
+Sports
+
+Purpose:
+- Perform real-world NLP inference.
+
+
+--------------------------------------------------
+
+
+40. FINAL LEARNING OBJECTIVE
+----------------------------
+
+The entire lab implemented:
+
+Raw Document
+↓
+Tokenization
+↓
+Vocabulary Mapping
+↓
+Tensor Construction
+↓
+Embedding Generation
+↓
+Semantic Document Representation
+↓
+Neural Classification
+↓
+Category Prediction
+
+Purpose:
+- Build an end-to-end neural NLP document classifier.
+
+
+--------------------------------------------------
+
+
+41. BIGGEST CONCEPTUAL LEARNING
+-------------------------------
+
+This lab taught:
+
+Human Language
+↓
+Mathematical Representation
+↓
+Semantic Vector Learning
+↓
+Neural Pattern Recognition
+↓
+Automated Document Understanding
+
+This was NOT merely:
+"classification."
+
+It was:
+- semantic representation learning
+- neural language understanding
+- embedding-based NLP
+
+
+--------------------------------------------------
+
+
+42. FINAL ARCHITECTURAL SUMMARY
+-------------------------------
+
+Raw Text
+↓
+Tokenization
+↓
+Vocabulary Construction
+↓
+Word-to-Index Mapping
+↓
+Tensor Conversion
+↓
+Batch Engineering
+↓
+Offset Tracking
+↓
+EmbeddingBag Aggregation
+↓
+Sentence Representation Learning
+↓
+Linear Classification
+↓
+Loss Computation
+↓
+Backpropagation
+↓
+Weight Optimization
+↓
+Semantic Learning
+↓
+Document Classification
+
+
+===========================
+FINAL INSIGHT
+===========================
+
+This lab implemented one of the foundational modern NLP pipelines:
+
+Language
+↓
+Semantic Embeddings
+↓
+Neural Representation Learning
+↓
+Automated Classification
+
+This architecture represents one of the major evolutionary foundations behind:
+- modern NLP
+- semantic search
+- transformers
+- large language models
+- generative AI systems.
+

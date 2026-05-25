@@ -1,0 +1,749 @@
+===========================
+FEEDFORWARD NEURAL NETWORK (FNN) FOR LANGUAGE MODELING
+Complete NLP + Neural Language Modeling Pipeline
+===========================
+
+
+1. RAW TEXT COLLECTION
+----------------------
+
+The lab started with a raw song/text corpus.
+
+Example:
+"We are no strangers to love..."
+
+This raw human language text became the foundational dataset for the entire language model.
+
+
+--------------------------------------------------
+
+
+2. TOKENIZATION
+---------------
+
+The raw text was broken into smaller units called tokens (mostly words).
+
+Example:
+
+"We are no strangers"
+
+↓
+
+["we", "are", "no", "strangers"]
+
+Purpose:
+- Convert continuous text into processable language units.
+- Prepare words for indexing and neural processing.
+
+
+--------------------------------------------------
+
+
+3. VOCABULARY CONSTRUCTION
+--------------------------
+
+A vocabulary was created containing all unique words.
+
+Example:
+
+{
+ "we": 0,
+ "are": 1,
+ "love": 2,
+ ...
+}
+
+Purpose:
+- Create a numerical identity for every unique word.
+- Neural networks cannot process raw text directly.
+
+
+--------------------------------------------------
+
+
+4. WORD → INDEX MAPPING
+-----------------------
+
+Every tokenized word was converted into numerical IDs.
+
+Example:
+
+["we", "are", "love"]
+
+↓
+
+[0, 1, 2]
+
+Purpose:
+- Transform language into machine-readable numerical representations.
+
+
+--------------------------------------------------
+
+
+5. TENSOR CONVERSION
+--------------------
+
+The numerical lists were converted into PyTorch tensors.
+
+Example:
+
+[0, 1, 2]
+
+↓
+
+tensor([0, 1, 2])
+
+Purpose:
+- Neural networks operate on tensors.
+- Enables GPU computation, gradients, and tensor algebra.
+
+
+--------------------------------------------------
+
+
+6. N-GRAM CONTEXT-TARGET GENERATION
+-----------------------------------
+
+This was the MOST IMPORTANT conceptual step.
+
+The dataset was transformed into:
+- context words
+- target next word
+
+Example:
+
+Sentence:
+"I love football very much"
+
+With CONTEXT_SIZE = 2:
+
+Context:
+["I", "love"]
+
+Target:
+"football"
+
+Next sample:
+
+Context:
+["love", "football"]
+
+Target:
+"very"
+
+Purpose:
+- Teach the neural network:
+  "Given previous words, predict the next word."
+
+This is the foundational principle of:
+- Language Modeling
+- GPT-style systems
+- Modern LLMs
+
+
+--------------------------------------------------
+
+
+7. CONTEXT-TARGET PAIRS BECAME TRAINING DATA
+--------------------------------------------
+
+The entire corpus was transformed into thousands of small learning examples.
+
+Example:
+
+Input:
+["love", "football"]
+
+Expected Output:
+"very"
+
+Purpose:
+- Convert raw language into supervised neural training samples.
+
+
+--------------------------------------------------
+
+
+8. EMBEDDING LAYER INITIALIZATION
+---------------------------------
+
+The neural network created an embedding layer:
+
+nn.Embedding(vocab_size, embedding_dim)
+
+Purpose:
+- Convert discrete word IDs into dense semantic vectors.
+
+Example:
+
+Word ID:
+52
+
+↓
+
+[0.22, -0.81, 0.55, ...]
+
+Meaning:
+- Similar words gradually learn similar vector representations.
+- Semantic learning begins here.
+
+
+--------------------------------------------------
+
+
+9. EMBEDDING REPRESENTATION LEARNING
+------------------------------------
+
+Every context word received its own semantic vector.
+
+Example:
+
+["love", "football"]
+
+↓
+
+[
+ vector("love"),
+ vector("football")
+]
+
+Purpose:
+- Capture semantic meaning instead of simple word identity.
+- Learn contextual word relationships automatically.
+
+
+--------------------------------------------------
+
+
+10. EMBEDDING RESHAPING (VERY IMPORTANT)
+----------------------------------------
+
+Initial embedding shape:
+
+(batch_size, context_size, embedding_dim)
+
+Example:
+
+(32, 2, 10)
+
+Meaning:
+- 32 samples
+- each sample has 2 context words
+- each word has 10-dimensional embedding
+
+The embeddings were reshaped into:
+
+(32, 20)
+
+Purpose:
+- Flatten all context embeddings into ONE combined semantic vector.
+- Prepare inputs for linear neural layers.
+
+Meaning:
+The network now sees:
+"combined meaning of previous context words."
+
+
+--------------------------------------------------
+
+
+11. COLLATE_BATCH() FUNCTION
+----------------------------
+
+This custom function prepared mini-batches for training.
+
+It returned:
+- context tensors
+- target tensors
+
+Example:
+
+Context Tensor:
+[
+ [1, 5],
+ [5, 9]
+]
+
+Target Tensor:
+[
+ 9,
+ 13
+]
+
+Purpose:
+- Organize training samples into structured neural batches.
+- Standardize input-output formatting.
+
+
+--------------------------------------------------
+
+
+12. BATCH PADDING
+-----------------
+
+Padding was added to ensure:
+- all batches have equal size.
+
+Purpose:
+- Prevent uneven final batches.
+- Maintain tensor consistency.
+- Improve GPU and tensor computation efficiency.
+
+
+--------------------------------------------------
+
+
+13. DATALOADER CREATION
+-----------------------
+
+The DataLoader automated:
+- batch generation
+- iteration
+- mini-batch feeding
+
+Purpose:
+- Efficiently stream training data into the neural network.
+
+
+--------------------------------------------------
+
+
+14. FEEDFORWARD NEURAL NETWORK (FNN) CONSTRUCTION
+-------------------------------------------------
+
+The model architecture:
+
+Input Context
+↓
+Embedding Layer
+↓
+Flattened Semantic Vector
+↓
+Hidden Layer
+↓
+Output Vocabulary Prediction
+
+Purpose:
+- Learn language patterns.
+- Predict next words probabilistically.
+
+
+--------------------------------------------------
+
+
+15. INPUT LAYER BEHAVIOR
+------------------------
+
+The input layer received:
+- context word IDs
+
+Example:
+
+["love", "football"]
+
+↓
+
+[5, 9]
+
+Purpose:
+- Provide context information to the network.
+
+
+--------------------------------------------------
+
+
+16. HIDDEN LAYER LEARNING
+-------------------------
+
+The hidden layer performed semantic reasoning.
+
+Example:
+
+["machine", "learning"]
+
+↓
+
+high probability for:
+"model"
+
+Purpose:
+- Learn contextual language relationships automatically.
+- Detect hidden semantic patterns.
+
+
+--------------------------------------------------
+
+
+17. OUTPUT LAYER MEANING
+------------------------
+
+The output layer size = vocabulary size.
+
+Example:
+
+Vocabulary Size = 5000
+
+↓
+
+5000 output neurons
+
+Each neuron represented:
+- probability of one vocabulary word.
+
+Example:
+
+Neuron 1 → "football"
+Neuron 2 → "music"
+Neuron 3 → "love"
+
+Purpose:
+- Predict probability distribution over all possible next words.
+
+
+--------------------------------------------------
+
+
+18. FORWARD PROPAGATION
+-----------------------
+
+Complete forward pipeline:
+
+Context Words
+↓
+Embeddings
+↓
+Flatten Semantic Context
+↓
+Hidden Neural Processing
+↓
+Vocabulary Prediction Logits
+
+Purpose:
+- Generate next-word predictions.
+
+
+--------------------------------------------------
+
+
+19. PREDICTION LOGITS
+---------------------
+
+The network generated raw scores (logits) for every vocabulary word.
+
+Example:
+
+football → 5.1
+music → 1.2
+love → 0.9
+
+Purpose:
+- Estimate likelihood of each possible next word.
+
+
+--------------------------------------------------
+
+
+20. ARGMAX SELECTION
+--------------------
+
+The highest probability/logit was selected.
+
+Example:
+
+max(probabilities)
+
+↓
+
+Predicted Word = "football"
+
+Purpose:
+- Final next-word prediction.
+
+
+--------------------------------------------------
+
+
+21. LOSS FUNCTION
+-----------------
+
+CrossEntropyLoss measured:
+- prediction error.
+
+Example:
+
+Predicted:
+"music"
+
+Actual:
+"football"
+
+↓
+
+High loss.
+
+Purpose:
+- Quantify how wrong the model currently is.
+
+
+--------------------------------------------------
+
+
+22. BACKPROPAGATION
+-------------------
+
+loss.backward()
+
+Purpose:
+- Compute gradients.
+- Determine how weights should change to reduce prediction errors.
+
+
+--------------------------------------------------
+
+
+23. OPTIMIZER STEP
+------------------
+
+optimizer.step()
+
+Purpose:
+- Update:
+  - embeddings
+  - hidden-layer weights
+  - output-layer weights
+
+The model gradually learns language structure.
+
+
+--------------------------------------------------
+
+
+24. EPOCH-BASED TRAINING
+------------------------
+
+The model repeatedly processed the entire dataset.
+
+Purpose:
+- Improve predictions over time.
+- Reduce loss iteratively.
+
+
+--------------------------------------------------
+
+
+25. AUTOREGRESSIVE TEXT GENERATION
+----------------------------------
+
+The trained model generated text recursively.
+
+Process:
+
+Initial Context
+↓
+Predict Next Word
+↓
+Append Predicted Word
+↓
+Use New Context
+↓
+Predict Again
+
+Purpose:
+- Generate coherent language sequences.
+
+This is the primitive ancestor of:
+- GPT generation
+- LLM text generation
+
+
+--------------------------------------------------
+
+
+26. EMBEDDING EXTRACTION
+------------------------
+
+After training:
+embedding vectors were extracted.
+
+Purpose:
+- Analyze learned semantic relationships.
+
+
+--------------------------------------------------
+
+
+27. t-SNE DIMENSIONALITY REDUCTION
+---------------------------------
+
+High-dimensional embeddings were reduced to 2D.
+
+Example:
+
+100D
+↓
+
+2D visualization
+
+Purpose:
+- Visualize semantic clustering.
+
+
+--------------------------------------------------
+
+
+28. SEMANTIC EMBEDDING VISUALIZATION
+------------------------------------
+
+Semantically similar words appeared near each other.
+
+Example:
+
+"love"
+"heart"
+"feeling"
+
+clustered together.
+
+Purpose:
+- Prove that the neural network learned semantic meaning.
+
+
+--------------------------------------------------
+
+
+29. PERPLEXITY COMPUTATION
+--------------------------
+
+Perplexity measured:
+- language model uncertainty/confusion.
+
+Lower perplexity:
+= better language prediction.
+
+Higher perplexity:
+= more confusion.
+
+Purpose:
+- Evaluate language modeling quality.
+
+
+--------------------------------------------------
+
+
+30. FINAL LEARNING OBJECTIVE
+----------------------------
+
+The entire lab implemented:
+
+Previous Context Words
+↓
+Neural Semantic Representation
+↓
+Next Word Prediction
+↓
+Recursive Language Generation
+
+This is one of the direct evolutionary ancestors of:
+- Neural NLP
+- Transformers
+- GPT
+- Large Language Models (LLMs)
+
+
+--------------------------------------------------
+
+
+31. BIGGEST CONCEPTUAL TRANSITION
+---------------------------------
+
+Earlier Document Classification:
+
+Whole Document
+↓
+Single Category Prediction
+
+
+
+Current Language Modeling:
+
+Previous Words
+↓
+Predict Next Word
+
+This transformed:
+- neural objective
+- output semantics
+- embedding behavior
+- contextual learning
+- sequence understanding
+
+
+--------------------------------------------------
+
+
+32. FINAL ARCHITECTURAL SUMMARY
+-------------------------------
+
+Raw Text
+↓
+Tokenization
+↓
+Vocabulary + Indexing
+↓
+Tensor Construction
+↓
+N-Gram Context-Target Generation
+↓
+Embedding Layer
+↓
+Flattened Semantic Context Vector
+↓
+Feedforward Neural Network
+↓
+Vocabulary Probability Prediction
+↓
+CrossEntropy Loss
+↓
+Backpropagation
+↓
+Weight Optimization
+↓
+Language Pattern Learning
+↓
+Recursive Text Generation
+↓
+Semantic Embedding Visualization
+↓
+Perplexity Evaluation
+
+
+===========================
+FINAL INSIGHT
+===========================
+
+This lab was NOT merely:
+"training a neural network."
+
+It actually implemented:
+- neural language modeling
+- semantic representation learning
+- next-word probabilistic prediction
+- primitive autoregressive text generation
+
+which are foundational concepts behind:
+modern Generative AI and Large Language Models.
+
+
+This lab focused on understanding and implementing:
+- neural language modeling
+- semantic embedding learning
+- next-word prediction
+- autoregressive text generation
+
+This is the foundation of:
+- modern NLP
+- Transformers
+- GPT
+- LLMs
+
