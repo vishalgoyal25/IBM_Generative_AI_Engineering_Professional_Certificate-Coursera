@@ -1,0 +1,75 @@
+Raw Reality / Human Knowledge
+↓
+Data Collection
+↓
+Data Engineering
+↓
+Data Cleaning
+↓
+Feature Engineering
+↓
+Tokenization
+↓
+Vocabulary Construction
+↓
+Numerical Representation
+↓
+Tensor Algebra
+↓
+Embedding Systems
+↓
+Semantic Vector Spaces
+↓
+Context Modeling
+↓
+Sequence Modeling
+↓
+Attention Mechanisms
+↓
+Transformer Architectures
+↓
+Self-Attention Mathematics
+↓
+Probabilistic Language Modeling
+↓
+Loss Optimization
+↓
+Gradient Descent
+↓
+Backpropagation
+↓
+Distributed GPU Training
+↓
+Massive Parameter Optimization
+↓
+Pretraining
+↓
+Fine-Tuning
+↓
+Instruction Tuning
+↓
+RLHF (Reinforcement Learning from Human Feedback)
+↓
+Inference Optimization
+↓
+Quantization
+↓
+Vector Databases
+↓
+Retrieval-Augmented Generation (RAG)
+↓
+Tool Calling Systems
+↓
+Memory Systems
+↓
+Agentic AI Workflows
+↓
+Autonomous Multi-Agent Systems
+↓
+Multi-Modal Intelligence
+↓
+Reasoning Systems
+↓
+World Modeling
+↓
+Artificial General Intelligence Research (AGI)

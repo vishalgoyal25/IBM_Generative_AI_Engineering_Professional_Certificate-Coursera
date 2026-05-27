@@ -28,3 +28,21 @@ AI_Engineering_(Complete_Book).pdf
 *.swp
 
 
+# NLP / Embedding Cache Files
+.vector_cache/
+*.pt
+*.zip
+*.txt.pt
+
+# Large Embedding Files
+glove*.txt
+glove*.zip
+
+# Model Checkpoints
+*.pth
+*.ckpt
+
+# Notebook Outputs / Generated Artifacts
+*.log
+*.out
+
