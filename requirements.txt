@@ -65,3 +65,7 @@ ipykernel==5.5.5
 nbformat==5.10.4
 
 gensim==4.4.0
+portalocker
+dash
+dash-table
+pmdarima

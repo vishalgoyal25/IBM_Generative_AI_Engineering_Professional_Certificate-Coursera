@@ -41,6 +41,8 @@ glove*.zip
 # Model Checkpoints
 *.pth
 *.ckpt
+*.pkl
+*.txt.pt
 
 # Notebook Outputs / Generated Artifacts
 *.log
