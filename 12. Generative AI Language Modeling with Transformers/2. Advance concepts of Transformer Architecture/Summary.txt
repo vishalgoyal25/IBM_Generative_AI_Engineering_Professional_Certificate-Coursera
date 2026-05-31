@@ -1,0 +1,66 @@
+Congratulations! You have completed this lesson. At this point in the course, you know that:
+
+The decoder is pivotal in text generation and is the foundation for GPT, LLaMA, and Granite. It functions autoregressively when forecasting future words.
+
+The decoder’s operation diverges from the inference phases during the training phase.
+
+Retaining context while classifying text is possible by integrating transformer attention layers.
+
+PyTorch implementation models are similar to Generative Pre-Trained Transformers (GPT).
+
+
+===================================
+
+
+Congratulations! You have completed this lesson. At this point in the course, you know that:
+
+The BERT model’s job is to predict which sentence is the appropriate continuation.
+
+BERT’s architecture allows fine-tuning tasks like text summarization, question answering, and sentiment analysis.
+
+For data preparation, you should initialize a tokenizer using "get_tokenizer" and define special symbols with their corresponding indices.
+
+
+===================================
+
+
+Congratulations! You have completed this lesson. At this point in the course, you know that:
+
+In the decoder method, the target sequence and the memory are taken as inputs, and the target sequence receives token embedding and positional encoding, like the source sequence.
+
+The transformer layer handles both encoding and decoding processes.
+
+Transformers process all text sequences simultaneously for language translation.
+
+Cross-attention computes attention scores between each target position and all source positions.
+
+
+===================================
+
+
+Congratulations! You have completed this lesson. At this point in the course, you know that:
+
+The encoder method processes all the encoder inputs and outputs the hidden state.
+
+The masked self-attention mechanism in the decoder ensures that the prediction for the current token can only depend on previous tokens.
+
+The decoder uses the output of the encoder layers as memory.
+
+To generate a new token, the decoder uses the previous tokens as input, while the encoder processes the input text once to create a context representation.
+
+
+===================================
+
+Congratulations! You have completed this lesson. At this point in the course, you know that:
+
+The encoder-decoder architecture is used for Seq2Seq models.
+
+The cross-attention layer in the decoder allows it to focus on relevant parts of the source text while generating the target text.
+
+The encoder is stackable and can be reused, which helps in transferring knowledge across tasks.
+
+During inference in a decoder, the output from the previous time step becomes an input to the current time step.
+
+
+===================================
+
