@@ -47,4 +47,4 @@ glove*.zip
 # Notebook Outputs / Generated Artifacts
 *.log
 *.out
-
+*.csv
