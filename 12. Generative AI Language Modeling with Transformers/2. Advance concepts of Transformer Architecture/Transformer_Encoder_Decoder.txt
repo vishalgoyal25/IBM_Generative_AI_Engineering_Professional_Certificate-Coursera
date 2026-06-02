@@ -1,0 +1,603 @@
+Transformer Encoder–Decoder Architecture: Complete Deep Learning Notes
+Introduction
+
+The Transformer architecture revolutionized Natural Language Processing (NLP) by replacing recurrent neural networks (RNNs) and LSTMs with an attention-based mechanism.
+
+Unlike RNNs, which process tokens sequentially, Transformers process all tokens simultaneously, enabling:
+
+Faster training
+Better parallelization
+Improved handling of long-range dependencies
+State-of-the-art performance in language tasks
+
+The original Transformer architecture consists of:
+
+Encoder + Decoder
+
+Modern models are derived from this architecture:
+
+BERT = Encoder Only
+
+GPT = Decoder Only
+
+Understanding the original Encoder–Decoder Transformer is essential before learning BERT, GPT, Fine-Tuning, RAG, and Agentic AI.
+
+High-Level Workflow
+Source Sentence
+        ↓
+Encoder
+        ↓
+Memory / Context Representation
+        ↓
+Decoder
+        ↓
+Generated Output
+
+Example:
+
+Input:
+"I love machine learning"
+
+↓
+
+Output:
+"J'aime l'apprentissage automatique"
+
+==========================================================================================================
+
+Step 1: Tokenization
+
+Neural networks cannot process raw text.
+
+The sentence is first split into tokens.
+
+Example:
+
+I love machine learning
+
+becomes:
+
+[I]
+[love]
+[machine]
+[learning]
+
+These tokens become the fundamental units processed by the model.
+
+==========================================================================================================
+
+
+Step 2: Token Embedding
+
+Tokens must be converted into numerical vectors.
+
+The embedding layer transforms each token into a dense representation.
+
+Example:
+
+I
+↓
+[0.23, 0.71, 0.12, ...]
+
+love
+↓
+[0.91, 0.32, 0.45, ...]
+
+These embeddings capture semantic relationships.
+
+For example:
+
+King
+Queen
+Prince
+Princess
+
+will occupy related regions in vector space.
+
+==========================================================================================================
+
+
+Step 3: Positional Encoding
+
+Transformers process tokens in parallel.
+
+Therefore, they do not naturally understand word order.
+
+Consider:
+
+Dog bites man
+
+vs
+
+Man bites dog
+
+The words are identical, but the meaning differs.
+
+To preserve sequence information, positional encodings are added.
+
+Example:
+
+Token          Position
+
+I              1
+love           2
+machine        3
+learning       4
+
+The model now knows:
+
+I comes before love
+love comes before machine
+Encoder Architecture
+
+The Encoder is responsible for understanding the source sentence.
+
+Goal:
+
+Extract Meaning
+
+==========================================================================================================
+
+
+Step 4: Multi-Head Self-Attention
+
+This is the core innovation of Transformers.
+
+Each token asks:
+
+Which other tokens are important to me?
+
+Example:
+
+machine learning
+
+The word:
+
+learning
+
+will strongly attend to:
+
+machine
+
+because the phrase has semantic significance.
+
+Multiple Attention Heads
+
+Instead of a single attention mechanism, several attention heads operate simultaneously.
+
+Different heads learn different relationships.
+
+Examples:
+
+Head 1
+
+Captures grammar.
+
+Subject → Verb
+Head 2
+
+Captures semantic relationships.
+
+machine → learning
+Head 3
+
+Captures long-distance dependencies.
+
+The student who studied all night passed.
+
+Relates:
+
+student ↔ passed
+
+despite many words in between.
+
+Why Multi-Head Attention Matters
+
+Different heads focus on different linguistic patterns.
+
+This gives the model richer contextual understanding.
+
+==========================================================================================================
+
+
+Step 5: Add & Normalize
+
+After attention:
+
+Attention Output
+
+is combined with:
+
+Original Input
+
+through a residual connection.
+
+Then normalization is applied.
+
+Benefits:
+
+Stable training
+Better gradient flow
+Faster convergence
+
+==========================================================================================================
+
+
+Step 6: Feed Forward Network
+
+After communication through attention, each token undergoes additional processing.
+
+Structure:
+
+Linear Layer
+↓
+Activation
+↓
+Linear Layer
+
+Think of it as:
+
+Attention = Communication
+
+Feed Forward = Thinking
+
+The model refines token representations individually.
+
+==========================================================================================================
+
+
+Step 7: Encoder Output (Memory)
+
+After multiple encoder layers:
+
+Source Sentence
+↓
+Encoded Representation
+
+This output is commonly called:
+
+Memory
+
+The memory contains:
+
+Semantic meaning
+Context
+Relationships
+Grammatical information
+
+Example:
+
+I love machine learning
+
+becomes:
+
+Encoded Memory
+
+representing the entire sentence meaning.
+
+Decoder Architecture
+
+The Decoder generates the output sequence.
+
+Goal:
+
+Generate New Tokens
+Decoder Inputs
+
+The decoder receives two inputs.
+
+Input 1
+
+Previously generated tokens.
+
+Example:
+
+J'
+
+then:
+
+J'aime
+
+then:
+
+J'aime l'
+Input 2
+
+Encoder Memory
+
+The decoder constantly references the encoder output.
+
+This enables translation and contextual generation.
+
+==========================================================================================================
+
+
+Step 8: Masked Self-Attention
+
+The decoder must generate tokens one at a time.
+
+Suppose the model predicts:
+
+Word #3
+
+It must NOT see:
+
+Word #4
+Word #5
+Word #6
+
+Otherwise the task becomes trivial.
+
+Therefore:
+
+Future Tokens
+
+are hidden.
+
+Causal Masking
+
+Masking blocks access to future positions.
+
+Example:
+
+I love machine __
+
+The model can only use:
+
+I
+love
+machine
+
+and not future words.
+
+This creates the autoregressive behavior used by GPT.
+
+==========================================================================================================
+
+
+Step 9: Cross-Attention
+
+This is unique to the Decoder.
+
+The decoder asks:
+
+Which parts of the source sentence are relevant to the token I'm generating?
+
+Example
+
+Source:
+
+I love machine learning
+
+Generating:
+
+apprentissage
+
+The decoder focuses on:
+
+machine learning
+
+inside encoder memory.
+
+Cross-attention connects:
+
+Decoder
+↓
+Encoder Output
+
+Without cross-attention:
+
+Translation would be impossible.
+==========================================================================================================
+
+
+Step 10: Feed Forward Network
+
+The decoder also contains feed-forward layers.
+
+These further refine token representations after attention.
+
+Same principle:
+
+Attention = Communication
+
+Feed Forward = Processing
+==========================================================================================================
+
+
+Step 11: Linear Layer
+
+The decoder produces contextual embeddings.
+
+Humans need words.
+
+The linear layer converts embeddings into vocabulary scores.
+
+Example:
+
+Paris      0.95
+London     0.02
+Berlin     0.01
+
+The highest score is selected.
+
+==========================================================================================================
+
+
+Step 12: Softmax
+
+Softmax converts scores into probabilities.
+
+Example:
+
+Paris      95%
+London      3%
+Berlin      2%
+
+The token with highest probability becomes the next generated token.
+
+==========================================================================================================
+
+
+Step 13: Autoregressive Generation
+
+The process repeats.
+
+Example:
+
+J'
+↓
+J'aime
+↓
+J'aime l'
+↓
+J'aime l'apprentissage
+↓
+J'aime l'apprentissage automatique
+
+until:
+
+<EOS>
+
+is generated.
+
+==========================================================================================================
+
+
+Role of Masks
+
+Masks prevent the model from cheating.
+
+Source Mask
+
+Used in Encoder.
+
+Purpose:
+
+Ignore Padding Tokens
+Target Mask
+
+Used in Decoder.
+
+Purpose:
+
+Hide Future Tokens
+Encoder vs Decoder
+Encoder	Decoder
+Understands text	Generates text
+Bidirectional	Autoregressive
+Sees full sentence	Sees only previous tokens
+Uses Self-Attention	Uses Masked Self-Attention
+Produces memory	Produces output sequence
+Foundation of BERT	Foundation of GPT
+BERT vs GPT
+BERT
+
+==========================================================================================================
+
+
+Architecture:
+
+Encoder Only
+
+Purpose:
+
+Language Understanding
+
+Tasks:
+
+Classification
+Embeddings
+Search
+MLM
+NSP
+
+Can see:
+
+Past + Future
+GPT
+
+==========================================================================================================
+
+
+Architecture:
+
+Decoder Only
+
+Purpose:
+
+Language Generation
+
+Tasks:
+
+Chatbots
+Writing
+Coding
+Reasoning
+Text Generation
+
+Can see:
+
+Only Previous Tokens
+Complete Transformer Pipeline
+Input Sentence
+        ↓
+Tokenization
+        ↓
+Token Embedding
+        ↓
+Positional Encoding
+        ↓
+Encoder Self-Attention
+        ↓
+Feed Forward Network
+        ↓
+Encoder Memory
+        ↓
+Decoder Masked Attention
+        ↓
+Cross Attention
+        ↓
+Feed Forward Network
+        ↓
+Linear Layer
+        ↓
+Softmax
+        ↓
+Next Token
+        ↓
+Repeated Generation
+        ↓
+Final Output Sentence
+
+==========================================================================================================
+
+Final Key Insight
+
+The original Transformer architecture teaches three fundamental ideas:
+
+Encoder
+Understand Language
+Decoder
+Generate Language
+Attention
+Determine What Information Matters
+
+Everything in modern Generative AI is built on these principles:
+
+Transformer
+↓
+BERT / GPT
+↓
+Fine-Tuning
+↓
+LLMs
+↓
+RAG
+↓
+Tool Calling
+↓
+Agentic AI
+
+Understanding the Encoder–Decoder Transformer means understanding the foundation upon which modern Generative AI systems are built.
+

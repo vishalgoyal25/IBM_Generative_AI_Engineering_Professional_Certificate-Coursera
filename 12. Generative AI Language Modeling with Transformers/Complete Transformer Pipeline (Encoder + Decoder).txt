@@ -1,0 +1,159 @@
+INPUT SENTENCE
+(e.g., "I love machine learning")
+          │
+          ▼
+TOKENIZATION
+          │
+          ▼
+TOKEN EMBEDDINGS
+          │
+          ▼
+POSITIONAL ENCODINGS
+          │
+          ▼
+══════════════════════════════════════
+            ENCODER
+══════════════════════════════════════
+=============================
+Multi-Head Self Attention
+          │
+          ▼
+Add & Normalize
+          │
+          ▼
+Feed Forward Network
+          │
+          ▼
+Add & Normalize
+          │
+          ▼
+
+(Repeat N Encoder Layers)
+
+          │
+          ▼
+
+ENCODER OUTPUT
+("Memory" / Context Representation)
+
+══════════════════════════════════════
+              DECODER
+══════════════════════════════════════
+
+TARGET TOKENS
+(<SOS> or previously generated tokens)
+          │
+          ▼
+TOKEN EMBEDDINGS
+          │
+          ▼
+POSITIONAL ENCODINGS
+          │
+          ▼
+
+Masked Multi-Head Self Attention
+(Only past tokens visible)
+          │
+          ▼
+Add & Normalize
+          │
+          ▼
+
+Cross Attention
+(Query = Decoder)
+(Key/Value = Encoder Memory)
+          │
+          ▼
+Add & Normalize
+          │
+          ▼
+
+Feed Forward Network
+          │
+          ▼
+Add & Normalize
+          │
+          ▼
+
+(Repeat N Decoder Layers)
+
+          │
+          ▼
+
+LINEAR LAYER
+          │
+          ▼
+
+SOFTMAX
+          │
+          ▼
+
+NEXT TOKEN PREDICTION
+          │
+          ▼
+
+Append Predicted Token
+          │
+          ▼
+
+Repeat Until <EOS>
+
+          │
+          ▼
+
+FINAL GENERATED OUTPUT
+
+
+===========================================
+
+How BERT Fits
+Transformer
+   │
+   ├── Encoder Only ──► BERT
+   │
+   └── Decoder Only ──► GPT
+
+BERT uses only:
+
+Input
+ ↓
+Embeddings
+ ↓
+Encoder Stack
+ ↓
+MLM + NSP Heads
+
+No Decoder.
+
+=============================
+How GPT Fits
+
+GPT uses only:
+
+Input Tokens
+ ↓
+Embeddings
+ ↓
+Masked Decoder Stack
+ ↓
+Linear
+ ↓
+Softmax
+ ↓
+Next Token
+
+No Encoder.
+
+=============================
+Ultimate One-Line Summary
+Transformer = Encoder + Decoder
+
+BERT = Encoder Only
+
+GPT = Decoder Only
+
+This is the single most important architectural relationship to remember before entering Courses 13–16 (Fine-Tuning, LLMs, RAG, and Agentic AI).
+
+
+
+=========================================================================================
