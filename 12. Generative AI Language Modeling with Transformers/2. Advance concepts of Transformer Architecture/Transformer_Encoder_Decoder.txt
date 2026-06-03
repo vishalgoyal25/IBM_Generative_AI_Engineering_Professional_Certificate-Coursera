@@ -493,8 +493,6 @@ Foundation of BERT	Foundation of GPT
 BERT vs GPT
 BERT
 
-==========================================================================================================
-
 
 Architecture:
 
@@ -600,4 +598,3 @@ Tool Calling
 Agentic AI
 
 Understanding the Encoder–Decoder Transformer means understanding the foundation upon which modern Generative AI systems are built.
-
