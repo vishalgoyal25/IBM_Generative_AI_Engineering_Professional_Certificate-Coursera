@@ -37,6 +37,10 @@ huggingface-hub==0.36.2
 pydantic==2.10.1
 numpy==1.26.4
 pandas==1.5.3
+datasets==2.15.0
+accelerate==0.34.0
+protobuf==3.20.0
+ipython_genutils
 
 # Visualization
 matplotlib==3.9.0
@@ -62,7 +66,7 @@ beautifulsoup4==4.14.3
 portalocker==2.10.1
 email-validator==2.1.1
 tqdm==4.66.1
-ipykernel==5.5.5
+ipykernel
 nbformat==5.10.4
 
 gensim==4.4.0
