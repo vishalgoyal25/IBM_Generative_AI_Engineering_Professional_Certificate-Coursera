@@ -74,3 +74,6 @@ portalocker
 dash
 dash-table
 pmdarima
+rich
+torchmetrics
+trl
