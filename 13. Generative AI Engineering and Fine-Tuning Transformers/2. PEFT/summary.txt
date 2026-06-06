@@ -24,11 +24,10 @@ Model quantization reduces the precision of model parameters by reducing the mod
 
 Some of the model quantization techniques are:
 
-Uniform quantization
+1. Uniform quantization
 
-Non-uniform quantization
+2. Non-uniform quantization
 
-Weight clustering
+3. Weight clustering
 
-Pruning and quantization
-
+4. Pruning and quantization
