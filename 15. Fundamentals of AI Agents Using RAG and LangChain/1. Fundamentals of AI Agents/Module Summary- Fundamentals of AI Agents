@@ -1,0 +1,21 @@
+Congratulations! You have completed this module. At this point, you understand that:
+
+AI agents are autonomous systems that perceive their environment, reason about goals, and take actions to achieve desired outcomes.
+
+Not every problem requires an AI agent—simple LLM calls or predefined workflows are often better suited for predictable or low-risk tasks.
+
+AI agents are most effective for complex tasks that require flexibility, decision-making, and interaction with external tools or systems.
+
+AI agents differ from traditional AI systems by combining reasoning, memory, and tool use within an iterative perceive–reason–act cycle.
+
+Tool calling enables LLMs to access real-time data, external APIs, databases, and code execution, allowing them to move beyond guessing and take real-world actions.
+
+Traditional tool calling can introduce errors or hallucinations, while embedded tool calling through libraries or frameworks can improve reliability and execution.
+
+AI agents have important limitations, including reliability concerns, higher computational costs, and the need for human oversight.
+
+Effective agent design involves clear task boundaries, thoughtful tool definitions, and monitoring to reduce risk and improve accuracy.
+
+AI agents can be built either from scratch or by using frameworks, each approach offering different trade-offs in control, complexity, and development speed.
+
+Building a simple AI agent from scratch provides a strong foundation for understanding more advanced agent architectures and frameworks introduced in later modules.

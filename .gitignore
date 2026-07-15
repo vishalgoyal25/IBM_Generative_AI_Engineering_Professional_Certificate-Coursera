@@ -48,3 +48,5 @@ glove*.zip
 *.log
 *.out
 *.csv
+
+Jobs.txt
